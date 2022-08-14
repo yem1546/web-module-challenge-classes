@@ -78,7 +78,27 @@ class Person {
 */
 
 class Car {
-  
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0
+    this.odometer = 0
+  }
+  fill(gallons) {
+    this.tank += gallons
+  }
+  drive(distance) {
+    let maxDistance = this.milesPerGallon * this.tank
+    if (distance > maxDistance){
+      this.tank = 0
+      this.odometer += maxDistance
+      return `I ran out of fuel at ${this.odometer} miles!`
+    }
+    else {
+      this.odometer += distance
+      this.tank -= (distance/this.milesPerGallon)
+    }
+  }
 }
 
 /*
@@ -95,7 +115,14 @@ class Car {
 */
 
 class Lambdasian {
-  
+  constructor(props) {
+    this.name = props.name;
+    this.age = props.age;
+    this.location = props.location;
+  }
+  speak() {
+    return `Hello my name is ${this.name}, I am from ${this.location}` 
+  }
 }
 
 /*
@@ -113,8 +140,19 @@ class Lambdasian {
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
 
-class Instructor {
-
+class Instructor extends Lambdasian {
+  constructor(props){
+    super(props)
+    this.specialty = props.specialty
+    this.favLanguage = props.favLanguage
+    this.catchPhrase = props.catchPhrase
+  }
+  demo(string) {
+    return `Today we are learning about ${string}`
+  }
+  grade(obj, string) {
+    return `${obj.name} receives a perfect score on ${string}`
+  }
 }
 
 /*
@@ -133,8 +171,22 @@ class Instructor {
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
 
-class Student {
-   
+class Student extends Lambdasian {
+   constructor(props){
+    super(props)
+    this.previousBackground = props.previousBackground;
+    this.className = props.className;
+    this.favSubjects = props.favSubjects;
+   }
+   listSubjects(){
+    return JSON.stringify(this.favSubjects)
+   }
+   PRAssignment(subject){
+    return `${this.name} has submitted a PR for ${subject}`
+   }
+   sprintChallenge(subject){
+    return `${this.name} has begun sprint challenge on ${subject}`
+   }
 }
 
 /*
